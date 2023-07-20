@@ -302,7 +302,7 @@ public class Place : MonoBehaviour
                         while (i <= 7 && vertices[i++, z, 0] == -1) ;
                         if (vertices[i - 1, z, 0] == 1)
                         {
-                            for (int j = x + 1; j <= i - 1; j++)
+                            for (int j = x + 1; j < i - 1; j++)
                             {
                                 vertices[j, z, 0] = 1;
                             }
@@ -312,49 +312,49 @@ public class Place : MonoBehaviour
                         while (k >= 0 && vertices[k--, z, 0] == -1) ;
                         if (vertices[k + 1, z, 0] == 1)
                         {
-                            for (int j = x - 1; j >= k + 1; j--)
+                            for (int j = x - 1; j > k + 1; j--)
                             {
                                 vertices[j, z, 0] = 1;
                             }
                         }
-                        i = x + 1;
-                        k = x - 1;
+                        int m = z + 1;
                         //coloumn B-T
-                        while (i <= 7 && vertices[z, i++, 0] == -1) ;
-                        if (vertices[z, i - 1, 0] == 1)
+                        while (m <= 7 && vertices[x, m++, 0] == -1) ;
+                        if (vertices[x, m - 1, 0] == 1)
                         {
-                            for (int j = x + 1; j <= i-1; j++)
+                            for (int j = z + 1; j < m -1; j++)
                             {
-                                vertices[z, j, 0] = 1;
+                                vertices[x, j, 0] = 1;
                             }
                         }
+                        int p = z - 1;
                         //coloumn T-B
-                        while (k >= 0 && vertices[z, k--, 0] == -1) ;
-                        if (vertices[z, k + 1, 0] == 1)
+                        while (p >= 0 && vertices[x, p--, 0] == -1) ;
+                        if (vertices[x, p + 1, 0] == 1)
                         {
-                            for (int j = x - 1; j >= k+1; j--)
+                            for (int j = z - 1; j > p+1; j--)
                             {
-                                vertices[z, j, 0] = 1;
+                                vertices[x, j, 0] = 1;
                             }
                         }
                         i = x + 1;
                         k = x - 1;
                         //diagonal D-U
-                        int m = z + 1;
+                        m = z + 1;
                         while (k >= 0 && m <= 7 && vertices[k--, m++, 0] == -1) ;
                         if (vertices[k + 1, m - 1, 0] == 1)
                         {
-                            for (int j = x - 1, n = z + 1; j >= k +1 && n <= m-1; j--, n++)
+                            for (int j = x - 1, n = z + 1; j > k +1 && n < m-1; j--, n++)
                             {
                                 vertices[j, n, 0] = 1;
                             }
                         }
                         //diagonal U-D
-                        int p = z - 1;
+                        p = z - 1;
                         while (p >= 0 && i <= 7 && vertices[i++, p--, 0] == -1) ;
                         if (vertices[i - 1, p + 1, 0] == 1)
                         {
-                            for (int j = x + 1, n = z - 1; j <= i - 1 && n >= p+1; j++, n--)
+                            for (int j = x + 1, n = z - 1; j < i - 1 && n > p+1; j++, n--)
                             {
                                 vertices[j, n, 0] = 1;
                             }
@@ -367,7 +367,7 @@ public class Place : MonoBehaviour
                         while (i <= 7 && m <= 7 && vertices[i++, m++, 0] == -1) ;
                         if (vertices[i - 1, m - 1, 0] == 1)
                         {
-                            for (int j = x + 1, n = z + 1; j <= i - 1 && n <= m-1; j++, n++)
+                            for (int j = x + 1, n = z + 1; j < i - 1 && n < m-1; j++, n++)
                             {
                                 vertices[j, n, 0] = 1;
                             }
@@ -376,7 +376,7 @@ public class Place : MonoBehaviour
                         while (k >= 1 && p >= 1 && vertices[k--, p--, 0] == -1) ;
                         if (vertices[k + 1, p + 1, 0] == 1)
                         {
-                            for (int j = x - 1, n = z - 1; j >= k + 1 && n >= p+1; j--, n--)
+                            for (int j = x - 1, n = z - 1; j > k + 1 && n > p+1; j--, n--)
                             {
                                 vertices[j, n, 0] = 1;
                             }
@@ -393,7 +393,7 @@ public class Place : MonoBehaviour
                         while (i <= 7 && vertices[i++, z, 0] == 1) ;
                         if (vertices[i - 1, z, 0] == -1)
                         {
-                            for (int j = x + 1; j <= i-1; j++)
+                            for (int j = x + 1; j < i-1; j++)
                             {
                                 vertices[j, z, 0] = -1;
                             }
@@ -403,49 +403,51 @@ public class Place : MonoBehaviour
                         while (k >= 0 && vertices[k--, z, 0] == 1) ;
                         if (vertices[k + 1, z, 0] == -1)
                         {
-                            for (int j = x - 1; j >= k+1; j--)
+                            for (int j = x - 1; j > k+1; j--)
                             {
                                 vertices[j, z, 0] = -1;
                             }
                         }
                         i = x + 1;
                         k = x - 1;
+                        int m = z + 1;
                         //coloumn B-T
-                        while (i <= 7 && vertices[z, i++, 0] == 1) ;
-                        if (vertices[z, i - 1, 0] == -1)
+                        while (m <= 7 && vertices[x, m++, 0] == 1) ;
+                        if (vertices[x, m - 1, 0] == -1)
                         {
-                            for (int j = x + 1; j <= i-1; j++)
+                            for (int j = z + 1; j < m -1; j++)
                             {
-                                vertices[z, j, 0] = -1;
+                                vertices[x, j, 0] = -1;
                             }
                         }
+                        int p = z - 1;
                         //coloumn T-B
-                        while (k >= 0 && vertices[z, k--, 0] == 1) ;
-                        if (vertices[z, k + 1, 0] == -1)
+                        while (k >= 0 && vertices[x, p--, 0] == 1) ;
+                        if (vertices[x, p + 1, 0] == -1)
                         {
-                            for (int j = x - 1; j >= k+1; j--)
+                            for (int j = z - 1; j > p+1; j--)
                             {
-                                vertices[z, j, 0] = -1;
+                                vertices[x, j, 0] = -1;
                             }
                         }
                         i = x + 1;
                         k = x - 1;
                         //diagonal D-U
-                        int m = z + 1;
+                        m = z + 1;
                         while (k >= 0 && m <= 7 && vertices[k--, m++, 0] == 1) ;
                         if (vertices[k + 1, m - 1, 0] == -1)
                         {
-                            for (int j = x - 1, n = z + 1; j >= k+1 && n <= m-1; j--, n++)
+                            for (int j = x - 1, n = z + 1; j > k+1 && n < m-1; j--, n++)
                             {
                                 vertices[j, n, 0] = -1;
                             }
                         }
                         //diagonal U-D
-                        int p = z - 1;
+                        p = z - 1;
                         while (p >= 0 && i <= 7 && vertices[i++, p--, 0] == 1) ;
                         if (vertices[i - 1, p + 1, 0] == -1)
                         {
-                            for (int j = x + 1, n = z - 1; j <= i - 1 && n >= p+1; j++, n--)
+                            for (int j = x + 1, n = z - 1; j < i - 1 && n > p+1; j++, n--)
                             {
                                 vertices[j, n, 0] = -1;
                             }
@@ -458,7 +460,7 @@ public class Place : MonoBehaviour
                         while (i <= 7 && m <= 7 && vertices[i++, m++, 0] == 1) ;
                         if (vertices[i - 1, m - 1, 0] == -1)
                         {
-                            for (int j = x + 1, n = z + 1; j <= i - 1 && n <= m-1; j++, n++)
+                            for (int j = x + 1, n = z + 1; j < i - 1 && n < m-1; j++, n++)
                             {
                                 vertices[j, n, 0] = -1;
                             }
@@ -467,7 +469,7 @@ public class Place : MonoBehaviour
                         while (k >= 1 && p >= 1 && vertices[k--, p--, 0] == 1) ;
                         if (vertices[k + 1, p + 1, 0] == -1)
                         {
-                            for (int j = x - 1, n = z - 1; j >= k + 1 && n >= p+1; j--, n--)
+                            for (int j = x - 1, n = z - 1; j > k + 1 && n > p+1; j--, n--)
                             {
                                 vertices[j, n, 0] = -1;
                             }
