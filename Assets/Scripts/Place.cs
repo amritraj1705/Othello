@@ -18,6 +18,10 @@ public class Place : MonoBehaviour
         vertices[3, 4, 0] = -1;
         vertices[4, 3, 0] = -1;
         vertices[4, 4, 0] = 1;
+        Instantiate(disc, new Vector3(0.5f, 0.375f,0.5f), Quaternion.identity);
+        Instantiate(disc, new Vector3(-0.5f, 0.375f, -0.5f), Quaternion.identity);
+        Instantiate(disc, new Vector3(0.5f, 0.375f, -0.5f), Quaternion.Euler(180,0,0));
+        Instantiate(disc, new Vector3(-0.5f, 0.375f, 0.5f), Quaternion.Euler(180, 0, 0));
     }
     void CreateShape()
     {
@@ -25,12 +29,14 @@ public class Place : MonoBehaviour
         {
             for (int z = -4; z <= 3; z++)
             {
+                Debug.Log("1");
                 vertices[x + 4, z + 4,0] = 0;
                 vertices[x+4, z + 4,1] = 0;
                 Instantiate(cube, new Vector3(x + 0.5f, 0, z + 0.5f), Quaternion.identity);
             }
         }
     }
+    
     void Count()
     {
         for (int x = -4; x <= +3; x++)
@@ -50,79 +56,6 @@ public class Place : MonoBehaviour
         //Debug.Log(black);
         //Debug.Log(white);
     }
-    /*/void turn()
-    {
-        for (int z = 1; z <= 8; z++)
-        {
-            for (int x = 1; x <= 8; x++)
-            {
-                if (val % 2 == 0)
-                {
-                    //row
-                    if (vertices[x - 1, z - 1, 0] == 1 && vertices[x, z - 1, 0] == -1)
-                    {
-                        int i = x;
-                        while (vertices[i++, z - 1, 0] == -1 && x <= 7) ;
-                        if (vertices[i - 1, z - 1, 0] == 1)
-                        {
-                            for (; x < i - 1; x++) 
-                            {
-                                vertices[x, z - 1, 0] = 1;
-                            }
-                        }
-                    }
-                    //coloumn
-                    if (vertices[z - 1, x - 1, 0] == 1 && vertices[z - 1, x, 0] == -1)
-                    {
-                        int i = x;
-                        while (x <= 7 && vertices[z - 1, i++, 0] == -1 ) ;
-                        if (vertices[z - 1, i - 1, 0] == 1)
-                        {
-                            for (; x <i - 1; x++) 
-                            {
-                                vertices[z - 1, x, 0] = 1;
-                            }
-                        }
-                        else
-                        {
-                            vertices[z - 1, x, 1] = 0;
-                        }
-                    }
-
-                }
-                if (val % 2 != 0)
-                {
-                    //rows
-                    if (vertices[x - 1, z - 1, 0] == -1 && vertices[x, z - 1, 0] == 1)
-                    {
-                        int i=x;
-                        while (x <= 7 && vertices[i++, z - 1, 0] == 1) ;
-                        if (vertices[i - 1, z - 1, 0] == 0)
-                        {
-                            for (; x < i - 1; x++)
-                            {
-                                vertices[x,z-1, 0]= -1;
-                            }
-                        }
-                    }
-                    //column
-                    if (vertices[z - 1, x - 1, 0] == -1 && vertices[z - 1, x, 0] == 1)
-                    {
-                        int i=x;
-                        while (i<=7 && vertices[z - 1, i++, 0] == 1 ) ;
-                        if (vertices[z - 1, i - 1, 0] == 0)
-                        {
-                            for (; x < i; x++)
-                            {
-                                vertices[z - 1, x, 0] = -1;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }/*/
-
     void ValidMove()
     {
         for (int x = -4; x <= +3; x++)
@@ -147,10 +80,6 @@ public class Place : MonoBehaviour
                         {
                             vertices[x - 1, z - 1, 1] = 1;
                         }
-                        else
-                        {
-                            vertices[x - 1, z - 1, 1] = 0;
-                        }
                     }
                     //rows R-L
                     if (x <= 6 && vertices[x - 1, z - 1, 0] == 1 && vertices[x, z - 1, 0] == -1)
@@ -160,10 +89,6 @@ public class Place : MonoBehaviour
                         if (vertices[i - 1, z - 1, 0] == 0)
                         {
                             vertices[i - 1, z - 1, 1] = 1;
-                        }
-                        else
-                        {
-                            vertices[i - 1, z - 1, 1] = 0;
                         }
                     }
 
@@ -179,10 +104,6 @@ public class Place : MonoBehaviour
                         {
                             vertices[x - 1, z - 1, 1] = 1;
                         }
-                        else
-                        {
-                            vertices[x - 1, z - 1, 1] = 0;
-                        }
                     }
                     //rows R-L
                     if (x <= 6 && vertices[x - 1, z - 1, 0] == -1 && vertices[x, z - 1, 0] == 1)
@@ -192,10 +113,6 @@ public class Place : MonoBehaviour
                         if (vertices[i - 1, z - 1, 0] == 0)
                         {
                             vertices[i - 1, z - 1, 1] = 1;
-                        }
-                        else
-                        {
-                            vertices[i - 1, z - 1, 1] = 0;
                         }
                     }
                 }
@@ -269,13 +186,9 @@ public class Place : MonoBehaviour
                         {
                             vertices[x - 1, z - 1, 1] = 1;
                         }
-                        else
-                        {
-                            vertices[x - 1, z - 1, 1] = 0;
-                        }
                     }
                     //diagonal U-D
-                    if (x >= 3 && z <= 6 && vertices[x - 1, z - 1, 0] == 1 && vertices[x-2, z, 0] == -1)
+                    if (x >= 3 && z <= 6 && vertices[x - 1, z - 1, 0] == 1 && vertices[x - 2, z, 0] == -1)
                     {
                         int i = x - 2, j = z;
                         while (i >= 0 && j <= 7 && vertices[i--, j++, 0] == -1) ;
@@ -283,12 +196,7 @@ public class Place : MonoBehaviour
                         {
                             vertices[i + 1, j - 1, 1] = 1;
                         }
-                        else
-                        {
-                            vertices[i + 1, j - 1, 1] = 0;
-                        }
                     }
-
                 }
                 if (val % 2 != 0)
                 {
@@ -301,10 +209,6 @@ public class Place : MonoBehaviour
                         {
                             vertices[x - 1, z - 1, 1] = 1;
                         }
-                        else
-                        {
-                            vertices[x - 1, z - 1, 1] = 0;
-                        }
                     }
                     //diagonal U-D
                     if (x >= 3 && z <= 6 && vertices[x - 1, z - 1, 0] == -1 && vertices[x-2, z, 0] == 1)
@@ -314,10 +218,6 @@ public class Place : MonoBehaviour
                         if (vertices[i + 1, j - 1, 0] == 0)
                         {
                             vertices[i + 1, j - 1, 1] = 1;
-                        }
-                        else
-                        {
-                            vertices[i + 1, j - 1, 1] = 0;
                         }
                     }
                 }
@@ -339,10 +239,6 @@ public class Place : MonoBehaviour
                         {
                             vertices[x - 1, z - 1, 1] = 1;
                         }
-                        else
-                        {
-                            vertices[x - 1, z - 1, 1] = 0;
-                        }
                     }
                     //diagonal U-D
                     if (x <= 6 && z <= 6 && vertices[x - 1, z - 1, 0] == 1 && vertices[x, z, 0] == -1)
@@ -352,10 +248,6 @@ public class Place : MonoBehaviour
                         if (vertices[i - 1, j - 1, 0] == 0)
                         {
                             vertices[i - 1, j - 1, 1] = 1;
-                        }
-                        else
-                        {
-                            vertices[i - 1, j - 1, 1] = 0;
                         }
                     }
 
@@ -371,10 +263,6 @@ public class Place : MonoBehaviour
                         {
                             vertices[x - 1, z - 1, 1] = 1;
                         }
-                        else
-                        {
-                            vertices[x - 1, z - 1, 1] = 0;
-                        }
                     }
                     //diagonal U-D
                     if (x <= 6 && z<=6 && vertices[x - 1, z - 1, 0] == -1 && vertices[x, z, 0] == 1)
@@ -384,10 +272,6 @@ public class Place : MonoBehaviour
                         if (vertices[i - 1, j - 1, 0] == 0)
                         {
                             vertices[i - 1, j - 1, 1] = 1;
-                        }
-                        else
-                        {
-                            vertices[i - 1, j - 1, 1] = 0;
                         }
                     }
                 }
@@ -408,22 +292,207 @@ public class Place : MonoBehaviour
             if (Physics.Raycast(ray, out hit, 100.0f))
             {
                 if (hit.collider.tag == "cube" && vertices[(int)(hit.collider.transform.position.x + 3.5), (int)(hit.collider.transform.position.z + 3.5), 1] == 1)
-                    if (val % 2 == 0)
+                { if (val % 2 == 0)
                     {
-                        Instantiate(disc, new Vector3(hit.collider.transform.position.x, hit.collider.transform.position.y + 0.375f, hit.collider.transform.position.z), Quaternion.identity);
-                        vertices[(int)(hit.collider.transform.position.x + 3.5) , (int)(hit.collider.transform.position.z + 3.5),0] = 1;
-                        Debug.Log((int)(hit.collider.transform.position.x + 3.5));
-                        Debug.Log((int)(hit.collider.transform.position.z + 3.5));
+                        //Instantiate(disc, new Vector3(hit.collider.transform.position.x, hit.collider.transform.position.y + 0.375f, hit.collider.transform.position.z), Quaternion.identity);
+                        vertices[(int)(hit.collider.transform.position.x + 3.5), (int)(hit.collider.transform.position.z + 3.5), 0] = 1;
+                        int x = (int)(hit.collider.transform.position.x + 3.5f), z = (int)(hit.collider.transform.position.z + 3.5f);
+                        //rows L-R
+                        int i = x + 1;
+                        while (i <= 7 && vertices[i++, z, 0] == -1) ;
+                        if (vertices[i - 1, z, 0] == 1)
+                        {
+                            for (int j = x + 1; j <= i - 1; j++)
+                            {
+                                vertices[j, z, 0] = 1;
+                            }
+                        }
+                        //rows R-L
+                        int k = x - 1;
+                        while (k >= 0 && vertices[k--, z, 0] == -1) ;
+                        if (vertices[k + 1, z, 0] == 1)
+                        {
+                            for (int j = x - 1; j >= k + 1; j--)
+                            {
+                                vertices[j, z, 0] = 1;
+                            }
+                        }
+                        i = x + 1;
+                        k = x - 1;
+                        //coloumn B-T
+                        while (i <= 7 && vertices[z, i++, 0] == -1) ;
+                        if (vertices[z, i - 1, 0] == 1)
+                        {
+                            for (int j = x + 1; j <= i-1; j++)
+                            {
+                                vertices[z, j, 0] = 1;
+                            }
+                        }
+                        //coloumn T-B
+                        while (k >= 0 && vertices[z, k--, 0] == -1) ;
+                        if (vertices[z, k + 1, 0] == 1)
+                        {
+                            for (int j = x - 1; j >= k+1; j--)
+                            {
+                                vertices[z, j, 0] = 1;
+                            }
+                        }
+                        i = x + 1;
+                        k = x - 1;
+                        //diagonal D-U
+                        int m = z + 1;
+                        while (k >= 0 && m <= 7 && vertices[k--, m++, 0] == -1) ;
+                        if (vertices[k + 1, m - 1, 0] == 1)
+                        {
+                            for (int j = x - 1, n = z + 1; j >= k +1 && n <= m-1; j--, n++)
+                            {
+                                vertices[j, n, 0] = 1;
+                            }
+                        }
+                        //diagonal U-D
+                        int p = z - 1;
+                        while (p >= 0 && i <= 7 && vertices[i++, p--, 0] == -1) ;
+                        if (vertices[i - 1, p + 1, 0] == 1)
+                        {
+                            for (int j = x + 1, n = z - 1; j <= i - 1 && n >= p+1; j++, n--)
+                            {
+                                vertices[j, n, 0] = 1;
+                            }
+                        }
+                        p = z - 1;
+                        m = z + 1;
+                        i = x + 1;
+                        k = x - 1;
+                        //diagonal D-U
+                        while (i <= 7 && m <= 7 && vertices[i++, m++, 0] == -1) ;
+                        if (vertices[i - 1, m - 1, 0] == 1)
+                        {
+                            for (int j = x + 1, n = z + 1; j <= i - 1 && n <= m-1; j++, n++)
+                            {
+                                vertices[j, n, 0] = 1;
+                            }
+                        }
+                        //diagonal U-D
+                        while (k >= 1 && p >= 1 && vertices[k--, p--, 0] == -1) ;
+                        if (vertices[k + 1, p + 1, 0] == 1)
+                        {
+                            for (int j = x - 1, n = z - 1; j >= k + 1 && n >= p+1; j--, n--)
+                            {
+                                vertices[j, n, 0] = 1;
+                            }
+                        }
                         val++;
                     }
                     else if (val % 2 != 0)
                     {
-                        Instantiate(disc, new Vector3(hit.collider.transform.position.x, hit.collider.transform.position.y + 0.375f, hit.collider.transform.position.z), Quaternion.Euler(180, 0, 0));
-                        vertices[(int)(hit.collider.transform.position.x + 3.5), (int)(hit.collider.transform.position.z + 3.5),0] = -1;
-                        Debug.Log((int)(hit.collider.transform.position.x + 3.5));
-                        Debug.Log((int)(hit.collider.transform.position.z + 3.5));
+                        //Instantiate(disc, new Vector3(hit.collider.transform.position.x, hit.collider.transform.position.y + 0.375f, hit.collider.transform.position.z), Quaternion.Euler(180, 0, 0));
+                        vertices[(int)(hit.collider.transform.position.x + 3.5), (int)(hit.collider.transform.position.z + 3.5), 0] = -1;
+                        int x = (int)(hit.collider.transform.position.x + 3.5f), z = (int)(hit.collider.transform.position.z + 3.5f);
+                        //rows L-R
+                        int i = x + 1;
+                        while (i <= 7 && vertices[i++, z, 0] == 1) ;
+                        if (vertices[i - 1, z, 0] == -1)
+                        {
+                            for (int j = x + 1; j <= i-1; j++)
+                            {
+                                vertices[j, z, 0] = -1;
+                            }
+                        }
+                        //rows R-L
+                        int k = x - 1;
+                        while (k >= 0 && vertices[k--, z, 0] == 1) ;
+                        if (vertices[k + 1, z, 0] == -1)
+                        {
+                            for (int j = x - 1; j >= k+1; j--)
+                            {
+                                vertices[j, z, 0] = -1;
+                            }
+                        }
+                        i = x + 1;
+                        k = x - 1;
+                        //coloumn B-T
+                        while (i <= 7 && vertices[z, i++, 0] == 1) ;
+                        if (vertices[z, i - 1, 0] == -1)
+                        {
+                            for (int j = x + 1; j <= i-1; j++)
+                            {
+                                vertices[z, j, 0] = -1;
+                            }
+                        }
+                        //coloumn T-B
+                        while (k >= 0 && vertices[z, k--, 0] == 1) ;
+                        if (vertices[z, k + 1, 0] == -1)
+                        {
+                            for (int j = x - 1; j >= k+1; j--)
+                            {
+                                vertices[z, j, 0] = -1;
+                            }
+                        }
+                        i = x + 1;
+                        k = x - 1;
+                        //diagonal D-U
+                        int m = z + 1;
+                        while (k >= 0 && m <= 7 && vertices[k--, m++, 0] == 1) ;
+                        if (vertices[k + 1, m - 1, 0] == -1)
+                        {
+                            for (int j = x - 1, n = z + 1; j >= k+1 && n <= m-1; j--, n++)
+                            {
+                                vertices[j, n, 0] = -1;
+                            }
+                        }
+                        //diagonal U-D
+                        int p = z - 1;
+                        while (p >= 0 && i <= 7 && vertices[i++, p--, 0] == 1) ;
+                        if (vertices[i - 1, p + 1, 0] == -1)
+                        {
+                            for (int j = x + 1, n = z - 1; j <= i - 1 && n >= p+1; j++, n--)
+                            {
+                                vertices[j, n, 0] = -1;
+                            }
+                        }
+                        p = z - 1;
+                        m = z + 1;
+                        i = x + 1;
+                        k = x - 1;
+                        //diagonal D-U
+                        while (i <= 7 && m <= 7 && vertices[i++, m++, 0] == 1) ;
+                        if (vertices[i - 1, m - 1, 0] == -1)
+                        {
+                            for (int j = x + 1, n = z + 1; j <= i - 1 && n <= m-1; j++, n++)
+                            {
+                                vertices[j, n, 0] = -1;
+                            }
+                        }
+                        //diagonal U-D
+                        while (k >= 1 && p >= 1 && vertices[k--, p--, 0] == 1) ;
+                        if (vertices[k + 1, p + 1, 0] == -1)
+                        {
+                            for (int j = x - 1, n = z - 1; j >= k + 1 && n >= p+1; j--, n--)
+                            {
+                                vertices[j, n, 0] = -1;
+                            }
+                        }
                         val++;
                     }
+                }
+                GameObject[] destroy = GameObject.FindGameObjectsWithTag("disc");
+                foreach (GameObject wdisc in destroy) { 
+                    GameObject.Destroy(wdisc);
+                    Debug.Log("Yes");}
+                for (int x = -4; x <= +3; x++)
+                {
+                    for (int z = -4; z <= 3; z++)
+                    {
+                        if (vertices[x + 4, z + 4, 0] == 1)
+                        {
+                            Instantiate(disc, new Vector3(x + 0.5f, 0.375f, z + 0.5f), Quaternion.identity);
+                        }
+                        if (vertices[x + 4, z + 4, 0] == -1)
+                        {
+                            Instantiate(disc, new Vector3(x + 0.5f, 0.375f, z + 0.5f), Quaternion.Euler(180, 0, 0));
+                        }
+                    }
+                }
             }
         }  
     }
