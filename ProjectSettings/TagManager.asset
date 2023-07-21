@@ -6,6 +6,7 @@ TagManager:
   tags:
   - cube
   - disc
+  - highlight
   layers:
   - Default
   - TransparentFX

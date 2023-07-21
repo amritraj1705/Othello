@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Place : MonoBehaviour
 {
@@ -10,7 +12,9 @@ public class Place : MonoBehaviour
     public int[, ,] vertices= new int[8,8,2];
     public GameObject cube;
     public GameObject disc;
+    public GameObject highlight; 
     int val = 0;
+    int end = 0;
     void Start()
     {
         CreateShape();
@@ -22,6 +26,11 @@ public class Place : MonoBehaviour
         Instantiate(disc, new Vector3(-0.5f, 0.375f, -0.5f), Quaternion.identity);
         Instantiate(disc, new Vector3(0.5f, 0.375f, -0.5f), Quaternion.Euler(180,0,0));
         Instantiate(disc, new Vector3(-0.5f, 0.375f, 0.5f), Quaternion.Euler(180, 0, 0));
+        ValidMove();
+        Instantiate(highlight, new Vector3(-0.5f, 0.3f, 1.5f), Quaternion.identity);
+        Instantiate(highlight, new Vector3(-1.5f, 0.3f, 0.5f), Quaternion.identity);
+        Instantiate(highlight, new Vector3(0.5f, 0.3f, -1.5f), Quaternion.identity);
+        Instantiate(highlight, new Vector3(1.5f, 0.3f, -0.5f), Quaternion.identity);
     }
     void CreateShape()
     {
@@ -283,7 +292,6 @@ public class Place : MonoBehaviour
     void Update()
     {
         Count();
-        ValidMove();
         //turn();
         if (Input.GetButtonDown("Fire1"))
         {
@@ -422,7 +430,7 @@ public class Place : MonoBehaviour
                         }
                         int p = z - 1;
                         //coloumn T-B
-                        while (k >= 0 && vertices[x, p--, 0] == 1) ;
+                        while (p >= 0 && vertices[x, p--, 0] == 1) ;
                         if (vertices[x, p + 1, 0] == -1)
                         {
                             for (int j = z - 1; j > p+1; j--)
@@ -480,11 +488,21 @@ public class Place : MonoBehaviour
                 GameObject[] destroy = GameObject.FindGameObjectsWithTag("disc");
                 foreach (GameObject wdisc in destroy) { 
                     GameObject.Destroy(wdisc);
-                    Debug.Log("Yes");}
+                    //Debug.Log("Yes");
+                }
+                GameObject[] destroy2 = GameObject.FindGameObjectsWithTag("highlight");
+                foreach (GameObject hlight in destroy2)
+                {
+                    GameObject.Destroy(hlight);
+                    Debug.Log("Yes");
+                }
+                ValidMove();
+                int sum = 0;
                 for (int x = -4; x <= +3; x++)
                 {
                     for (int z = -4; z <= 3; z++)
                     {
+                        if (vertices[x + 4, z + 4, 1] == 1) { Instantiate(highlight, new Vector3(x+0.5f, 0.3f, z+0.5f), Quaternion.identity); sum++; }
                         if (vertices[x + 4, z + 4, 0] == 1)
                         {
                             Instantiate(disc, new Vector3(x + 0.5f, 0.375f, z + 0.5f), Quaternion.identity);
@@ -494,6 +512,21 @@ public class Place : MonoBehaviour
                             Instantiate(disc, new Vector3(x + 0.5f, 0.375f, z + 0.5f), Quaternion.Euler(180, 0, 0));
                         }
                     }
+                }
+                if (sum != 0) { end = 0; }
+                if (sum == 0) 
+                {
+                    if (val % 2 == 0)
+                    { Debug.Log("No Valid Move For Black"); end++; }
+                    if (val % 2 != 0)
+                    { Debug.Log("No Valid Move For White"); end++; }
+                    val++; 
+                }
+                if (end == 2) 
+                {
+                    if (black > white) { SceneManager.LoadScene(1); }
+                    if (black < white) { SceneManager.LoadScene(2); }
+                    if (black == white) { SceneManager.LoadScene(3); }
                 }
             }
         }  
