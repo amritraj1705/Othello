@@ -24,6 +24,10 @@ public class MainMenu : MonoBehaviour
     {
         Invoke("OPenGameSpecification", 0.2f);
     }
+    public void RestartGame()
+    {
+        Invoke("OPenGameSpecification", 0.2f);
+    }
 
     public void Instructions()
     {

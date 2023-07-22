@@ -524,9 +524,9 @@ public class Place : MonoBehaviour
                 }
                 if (end == 2) 
                 {
-                    if (black > white) { SceneManager.LoadScene(1); }
-                    if (black < white) { SceneManager.LoadScene(2); }
-                    if (black == white) { SceneManager.LoadScene(3); }
+                    if (black > white) { SceneManager.LoadScene("Win"); }
+                    if (black < white) { SceneManager.LoadScene("Lose"); }
+                    if (black == white) { SceneManager.LoadScene("Draw"); }
                 }
             }
         }  
