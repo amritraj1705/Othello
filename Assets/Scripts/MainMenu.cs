@@ -10,10 +10,10 @@ public class MainMenu : MonoBehaviour
         Debug.Log("MainMenu");
         SceneManager.LoadScene("MainMenu");
     }
-    public void OPenGameSpecification()
+    public void OPenMode()
     {
-        Debug.Log("GameSpecification");
-        SceneManager.LoadScene("GameSpecification");
+        Debug.Log("Mode");
+        SceneManager.LoadScene("Mode");
     }
     public void OPenInstruction()
     {
@@ -22,11 +22,11 @@ public class MainMenu : MonoBehaviour
     }
     public void StartGame()
     {
-        Invoke("OPenGameSpecification", 0.2f);
+        Invoke("OPenMode", 0.2f);
     }
     public void RestartGame()
     {
-        Invoke("OPenGameSpecification", 0.2f);
+        Invoke("OPenMode", 0.2f);
     }
 
     public void Instructions()

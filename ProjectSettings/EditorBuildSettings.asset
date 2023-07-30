@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Draw.unity
     guid: 8435bff936f095544b5b44d27c4efc63
+  - enabled: 1
+    path: Assets/Scenes/Mode.unity
+    guid: 3aac192dcc5914847b833271085e8c14
   m_configObjects: {}

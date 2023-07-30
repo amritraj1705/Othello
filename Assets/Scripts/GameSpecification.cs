@@ -20,11 +20,11 @@ public class GameSpecification : MonoBehaviour
     public void DiffMedium()
     {
         Gamediff = 1;
-        Invoke("OPenSampleScene", 0.2f);
+        Invoke("OpenSampleScene", 0.2f);
     }
     public void DiffHard()
     {
         Gamediff = 2;
-        Invoke("OPenSampleScene", 0.2f);
+        Invoke("OpenSampleScene", 0.2f);
     }
 }
